@@ -1,0 +1,91 @@
+:root {
+  --border-radius-sm: 8px;
+  --border-radius-bg: 16px;
+  --yellow: rgb(228, 255, 107);
+  --green: #a5c45c;
+  --earth: #5c4033;
+  --sky: #4682b4;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  z-index: 0;
+}
+
+body {
+  background-color: var(--sky);
+  height: 100vh;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  line-height: 1.6;
+  overflow: hidden;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: fit-content;
+
+  padding: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  background-color: #a5c45c;
+  * {
+    padding: 8px;
+    margin-inline: 3%;
+    font-size: 1.2rem;
+  }
+
+  z-index: 1;
+}
+.header-right {
+  display: flex;
+  flex-direction: row;
+}
+.button-shape {
+  border-radius: var(--border-radius-sm);
+  background-color: var(--yellow);
+  width: 120px;
+}
+
+.greeting {
+  width: 140px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  background-color: var(--earth);
+  z-index: 1;
+}
+
+.obstacle {
+  position: absolute;
+  height: 100vh;
+  width: 50px;
+  right: -50px;
+}
+
+.obstacle-upper {
+  position: absolute;
+  height: 400px;
+  width: 50px;
+  background-color: green;
+}
+
+.obstacle-lower {
+  position: absolute;
+  top: 550px;
+  height: 400px;
+  width: 50px;
+  background-color: green;
+}
