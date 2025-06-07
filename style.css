@@ -15,6 +15,7 @@
 }
 
 body {
+  position: relative;
   background-color: var(--sky);
   height: 100vh;
   font-family: "Open Sans", sans-serif;
@@ -71,21 +72,32 @@ body {
 .obstacle {
   position: absolute;
   height: 100vh;
+  top: -200px;
   width: 50px;
   right: -50px;
 }
 
 .obstacle-upper {
   position: absolute;
-  height: 400px;
+  height: 600px;
   width: 50px;
   background-color: green;
 }
 
 .obstacle-lower {
   position: absolute;
-  top: 550px;
-  height: 400px;
+  top: 800px;
+  height: 600px;
   width: 50px;
   background-color: green;
+}
+
+#bird {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: yellow;
+  top: 50vh;
+  left: 7vh;
 }
