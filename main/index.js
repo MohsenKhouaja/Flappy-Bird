@@ -1,15 +1,26 @@
 let id2 = null;
 let id = null;
 let collisionid = null;
-window.onload = function () {
-  document.body.addEventListener("click", start);
+let scoreincrement = null;
+var score = 0;
 
+window.onload = function () {
+  document.body.addEventListener("click", start, false);
+  var bird = document.getElementById("bird");
+  var birdLeft = bird.getBoundingClientRect().left;
+  var obstacle = document.getElementsByClassName("obstacle")[0];
+  var instruction = document.getElementById("instruction");
+  var footer = document.getElementById("footer");
+  var scoreText = document.getElementById("score");
+  var footerWidth =
+    footer.getBoundingClientRect().bottom - footer.getBoundingClientRect().top;
+  console.log(footerWidth);
   var animating = false;
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   function start() {
-    var obstacle = document.getElementsByClassName("obstacle")[0];
+    instruction.innerHTML = "";
     var nbofCopies = 20;
     var container = document.body;
     if (!animating) {
@@ -20,13 +31,19 @@ window.onload = function () {
         collisionid = setInterval(() => {
           if (
             isColliding(clone.children[0], bird) ||
-            isColliding(clone.children[1], bird)
+            isColliding(clone.children[1], bird) ||
+            isColliding(footer, bird)
           ) {
-            clearInterval(id2);
-            clearInterval(id);
-            clearInterval(collisionid);
+            console.log("game over");
           }
         }, 100);
+        clone.dataset.scoreid = setInterval(() => {
+          if (clone.getBoundingClientRect().right <= birdLeft) {
+            score++;
+            scoreText.innerHTML = `Score = ${score}`;
+            clearInterval(clone.dataset.scoreid);
+          }
+        }, 300);
         let currentTop = parseInt(getComputedStyle(clone).top);
         let newTop = currentTop + getRandomInt(-200, 200);
         console.log("Original top from CSS:", currentTop);
@@ -45,7 +62,7 @@ window.onload = function () {
       }
     }
   }
-  document.body.addEventListener("click", clickHandle);
+  document.body.addEventListener("click", clickHandle, false);
   let started = false;
   function clickHandle() {
     if (!started) {
@@ -56,7 +73,6 @@ window.onload = function () {
     }
   }
 
-  var bird = document.getElementById("bird");
   let translation = 0;
   function birdFall() {
     if (id) clearInterval(id);
@@ -75,6 +91,11 @@ window.onload = function () {
     let jumpHeight = 6;
 
     id2 = setInterval(() => {
+      const top = bird.getBoundingClientRect().top;
+      if (top <= footerWidth) {
+        clearInterval(id2);
+        birdFall();
+      }
       let elapsed = Date.now() - jumpStart;
       let progress = elapsed / jumpDuration;
       if (progress >= 1) progress = 1;

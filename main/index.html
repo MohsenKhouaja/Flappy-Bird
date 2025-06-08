@@ -13,17 +13,18 @@
 
   <body>
     <div class="header">
-      <p class="greeting">hey,</p>
-      <div class="header-right">
-        <div class="score button-shape">Score = 0</div>
-      </div>
+      <p class="header-text" id="greeting">hey,</p>
+      <p class="header-text" id="instruction">
+        Click anywhere to start playing !
+      </p>
+      <div class="button-shape header-text" id="score">Score = 0</div>
     </div>
     <div id="bird"></div>
     <div class="obstacle">
       <div class="obstacle-upper obstacle-shape"></div>
       <div class="obstacle-lower obstacle-shape"></div>
     </div>
-    <div class="footer"></div>
+    <div class="footer" id="footer"></div>
     <script src="index.js"></script>
   </body>
 </html>
