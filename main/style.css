@@ -37,21 +37,23 @@ body {
   justify-content: space-between;
   width: 100vw;
 }
+.right-header {
+  display: flex;
+  flex-direction: row;
+  padding-left: 12px;
+  padding-right: 12px;
+}
 
 .header-text {
   padding: 8px;
   margin-inline: 3%;
   font-size: 1.2rem;
 }
-
 .button-shape {
   border-radius: var(--border-radius-sm);
   background-color: var(--yellow);
-  width: 120px;
-}
-
-.greeting {
-  width: 140px;
+  width: fit-content;
+  padding: 8px;
 }
 
 .footer {

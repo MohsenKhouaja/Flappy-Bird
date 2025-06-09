@@ -7,6 +7,8 @@ let gameIsOver = false;
 let gameHasStarted = false;
 let collisionid = null;
 let scoreincrement = null;
+let translation = 0;
+
 function removeObstacleAnimation() {
   for (let i = 0; i < obstacleAnimations.length; i++) {
     const animation = obstacleAnimations[i];
@@ -39,10 +41,47 @@ function isColliding(obj1, obj2) {
 }
 
 window.onload = function () {
+  //#region HTMLelements
+  var bird = document.getElementById("bird");
+  var birdLeft = bird.getBoundingClientRect().left;
+  var obstacle = document.getElementsByClassName("obstacle")[0];
+  var instruction = document.getElementById("instruction");
+  var footer = document.getElementById("footer");
+  var scoreText = document.getElementById("score");
+  var div = document.getElementById("right-header");
+  var RightHeaderGreeting = document.getElementById("greeting");
+  var footerWidth =
+    footer.getBoundingClientRect().bottom - footer.getBoundingClientRect().top;
+  console.log(footerWidth);
+  //#endregion
+
   document.body.addEventListener("click", clickHandlebird, false);
   document.body.addEventListener("click", obstacleAnimationclickHandle, false);
+
+  //#region startGame
+
+  function ChangeHeaderUIGameStart() {
+    var RestartButton = document.getElementById("restart");
+    var LeaderboardButton = document.getElementById("leaderboard");
+    div.removeChild(RestartButton);
+    div.removeChild(LeaderboardButton);
+    div.appendChild(RightHeaderGreeting);
+    scoreText.innerHTML = "Score = 0";
+    startGame();
+  }
   function startGame() {
     if (!gameHasStarted) {
+      bird.style.transform = `translateY(0px)`;
+      translation = 0;
+      document.body.addEventListener("click", clickHandlebird, false);
+      document.body.addEventListener(
+        "click",
+        obstacleAnimationclickHandle,
+        false
+      );
+      obstaclesAnimating = false;
+      obstacleAnimation();
+      console.log("game started");
       gameHasStarted = true;
       obstacleClones = [];
       score = 0;
@@ -71,21 +110,9 @@ window.onload = function () {
     }
   }
 
-  //#region HTMLelements
-  var bird = document.getElementById("bird");
-  var birdLeft = bird.getBoundingClientRect().left;
-  var obstacle = document.getElementsByClassName("obstacle")[0];
-  var instruction = document.getElementById("instruction");
-  var footer = document.getElementById("footer");
-  var scoreText = document.getElementById("score");
-  var footerWidth =
-    footer.getBoundingClientRect().bottom - footer.getBoundingClientRect().top;
-  console.log(footerWidth);
-  //#endregion
-
   let obstaclesAnimating = false;
   function obstacleAnimation() {
-    console.log("function called");
+    console.log("obstacle animatio");
     instruction.innerHTML = "";
     var container = document.body;
     if (!obstaclesAnimating) {
@@ -138,7 +165,6 @@ window.onload = function () {
 
   //#region  birdMouvement
   /* bird movement */
-  let translation = 0;
   function birdFall() {
     console.log("birdFall called"); // Debug output
     if (id) clearInterval(id);
@@ -174,6 +200,23 @@ window.onload = function () {
     }, 5);
   }
   //#endregion
+
+  //#region Game Over
+  function changeHeaderUIGameOver() {
+    div.removeChild(RightHeaderGreeting);
+    const RestartButton = document
+      .getElementById("button-template")
+      .content.firstElementChild.cloneNode(true);
+    RestartButton.textContent = "Restart";
+    RestartButton.id = "restart";
+    div.appendChild(RestartButton);
+    const LeaderboardButton = document
+      .getElementById("button-template")
+      .content.firstElementChild.cloneNode(true);
+    LeaderboardButton.textContent = "Leaderboard";
+    LeaderboardButton.id = "leaderboard";
+    div.appendChild(LeaderboardButton);
+  }
   function GameOver() {
     if (!gameIsOver) {
       gameIsOver = true;
@@ -201,6 +244,9 @@ window.onload = function () {
       }
       console.log(finalScore);
       scoreText.innerHTML = `Score = ${finalScore}`;
+      changeHeaderUIGameOver();
+      var RestartButton = document.getElementById("restart");
+      RestartButton.addEventListener("click", ChangeHeaderUIGameStart);
     }
   }
 };
