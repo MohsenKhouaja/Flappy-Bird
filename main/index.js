@@ -1,4 +1,4 @@
-var nbofObstacles = 20;
+var nbofObstacles = 1000;
 var score = 0;
 var obstacleClones = [];
 let id2 = null;
@@ -132,13 +132,16 @@ window.onload = function () {
             !gameIsOver
           ) {
             console.log("game over");
-            GameOver();
+            GameOver(false);
             return;
           }
         }, 100);
         clone.dataset.scoreid = setInterval(() => {
           if (clone.getBoundingClientRect().right <= birdLeft) {
             score++;
+            if (score === nbofObstacles) {
+              GameOver(true);
+            }
             if (!gameIsOver) scoreText.innerHTML = `Score = ${score}`;
             clearInterval(clone.dataset.scoreid);
           }
@@ -217,7 +220,13 @@ window.onload = function () {
     LeaderboardButton.id = "leaderboard";
     div.appendChild(LeaderboardButton);
   }
-  function GameOver() {
+  function GameOver(win) {
+    let message = "";
+    if (win) {
+      message = "You win!";
+    } else {
+      message = "Game Over";
+    }
     if (!gameIsOver) {
       gameIsOver = true;
       bird.style.transform = `translateY(0px)`;
@@ -225,7 +234,7 @@ window.onload = function () {
       gameHasStarted = false;
       document.body.removeEventListener("click", clickHandlebird);
       document.body.removeEventListener("click", obstacleAnimationclickHandle);
-      instruction.innerHTML = "Game Over!";
+      instruction.innerHTML = message;
       clearInterval(id);
       clearInterval(id2);
       clearInterval(scoreincrement);
