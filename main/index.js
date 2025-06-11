@@ -1,5 +1,5 @@
-var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-var nbofObstacles = 20;
+var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+var nbofObstacles = 50;
 var score = 0;
 var obstacleClones = [];
 let id2 = null;
@@ -13,7 +13,8 @@ function removeObstacleAnimation() {
   for (let i = 0; i < obstacleAnimations.length; i++) {
     const animation = obstacleAnimations[i];
 
-    // If it exists, cancel it
+    // If it exists, cancel
+    //  it
     if (animation) {
       animation.cancel(); // Stops and removes the animation
     }
@@ -209,7 +210,7 @@ window.onload = function () {
 
   //#region Game Over
   function logout() {
-    localStorage.removeItem("currentUser");
+    sessionStorage.removeItem("currentUser");
     window.location.href = "../login/login.html";
   }
   function updateUserScore(finalScore) {

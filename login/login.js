@@ -26,7 +26,7 @@ function signUp() {
   } else {
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem("currentUser", JSON.stringify(newUser));
+    sessionStorage.setItem("currentUser", JSON.stringify(newUser));
     window.location.href = "../main/index.html";
   }
 }
@@ -60,12 +60,12 @@ function checkLoginInput() {
       usernameInput.value = "";
       passwordInput.value = "";
     }
-    localStorage.setItem("currentUser", JSON.stringify(user));
+    sessionStorage.setItem("currentUser", JSON.stringify(user));
   }
 }
 
 function redirectIfLoggedIn() {
-  if (JSON.parse(localStorage.getItem("currentUser")) !== null) {
+  if (JSON.parse(sessionStorage.getItem("currentUser")) !== null) {
     window.location.href = "../main/index.html";
   }
 }
