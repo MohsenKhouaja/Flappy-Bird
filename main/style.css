@@ -28,6 +28,8 @@ body {
   display: flex;
   position: fixed;
   flex-direction: row;
+  white-space: nowrap;
+
   z-index: 1;
   height: fit-content;
   padding: 16px;
@@ -38,16 +40,20 @@ body {
   width: 100vw;
 }
 .right-header {
+  white-space: nowrap;
   display: flex;
   flex-direction: row;
   padding-left: 12px;
   padding-right: 12px;
 }
 #score {
+  white-space: nowrap;
   width: 150px;
   height: 50px;
 }
 #logout {
+  white-space: nowrap;
+
   min-width: 120px;
   height: 50px;
 }

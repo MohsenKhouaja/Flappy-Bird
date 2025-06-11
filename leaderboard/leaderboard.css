@@ -106,6 +106,7 @@ body {
 .player:not(:nth-child(3)):not(:nth-child(2)):not(:nth-child(4)) {
   background: rgba(var(--sky), 0.1);
   border: 1px solid rgba(var(--green), 0.3);
+  border: 2px solid var(--earth);
 }
 
 .rank {

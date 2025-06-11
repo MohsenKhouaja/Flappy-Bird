@@ -42,8 +42,6 @@ function isColliding(obj1, obj2) {
 }
 
 window.onload = function () {
-  //#region logout
-
   //#region HTMLelements
   var logOutButton = document.getElementById("logout");
   var bird = document.getElementById("bird");
@@ -56,13 +54,13 @@ window.onload = function () {
   var RightHeaderGreeting = document.getElementById("greeting");
   var footerWidth =
     footer.getBoundingClientRect().bottom - footer.getBoundingClientRect().top;
-  console.log(footerWidth);
   //#endregion
   logOutButton.addEventListener("click", logout);
   document.body.addEventListener("click", clickHandlebird, false);
   document.body.addEventListener("click", obstacleAnimationclickHandle, false);
 
   //#region startGame
+  RightHeaderGreeting.textContent = `hey, ${currentUser.username}`;
 
   function ChangeHeaderUIGameStart() {
     var RestartButton = document.getElementById("restart");
@@ -70,6 +68,7 @@ window.onload = function () {
     div.removeChild(RestartButton);
     div.removeChild(LeaderboardButton);
     div.appendChild(RightHeaderGreeting);
+    RightHeaderGreeting.textContent = `hey, ${currentUser.username}`;
     scoreText.innerHTML = "Score = 0";
     startGame();
   }
@@ -85,7 +84,6 @@ window.onload = function () {
       );
       obstaclesAnimating = false;
       obstacleAnimation();
-      console.log("game started");
       gameHasStarted = true;
       obstacleClones = [];
       score = 0;
@@ -116,14 +114,12 @@ window.onload = function () {
 
   let obstaclesAnimating = false;
   function obstacleAnimation() {
-    console.log("obstacle animatio");
     instruction.innerHTML = "";
     var container = document.body;
     if (!obstaclesAnimating) {
       /* so the obstacles animate only once */ obstaclesAnimating = true;
       /* each obstacle with it's own collison detection and destruction */
       for (var i = 0; i < nbofObstacles; i++) {
-        console.log("function executing");
         const clone = obstacle.cloneNode(true);
         clone.classList.add("obstacle-clone"); // Add a special class
         container.appendChild(clone);
@@ -135,7 +131,6 @@ window.onload = function () {
               isColliding(footer, bird)) &&
             !gameIsOver
           ) {
-            console.log("game over");
             GameOver(false);
             return;
           }
@@ -152,7 +147,6 @@ window.onload = function () {
         }, 300);
         let currentTop = parseInt(getComputedStyle(clone).top);
         let newTop = currentTop + getRandomInt(-200, 200);
-        console.log("Original top from CSS:", currentTop);
         clone.style.top = `${newTop}px`;
         clone.dataset.animation = clone.animate(
           [
@@ -173,7 +167,6 @@ window.onload = function () {
   //#region  birdMouvement
   /* bird movement */
   function birdFall() {
-    console.log("birdFall called"); // Debug output
     if (id) clearInterval(id);
     id = setInterval(fallframe, 6);
     function fallframe() {
@@ -266,7 +259,6 @@ window.onload = function () {
       });
       // Clear the obstacleClones array
       obstacleClones = [];
-      console.log(finalScore);
       scoreText.innerHTML = `Score = ${finalScore}`;
       changeHeaderUIGameOver();
       var RestartButton = document.getElementById("restart");
