@@ -1,5 +1,4 @@
-var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-var nbofObstacles = 20;
+var nbofObstacles = 1000;
 var score = 0;
 var obstacleClones = [];
 let id2 = null;
@@ -9,6 +8,7 @@ let gameHasStarted = false;
 let collisionid = null;
 let scoreincrement = null;
 let translation = 0;
+
 function removeObstacleAnimation() {
   for (let i = 0; i < obstacleAnimations.length; i++) {
     const animation = obstacleAnimations[i];
@@ -41,10 +41,7 @@ function isColliding(obj1, obj2) {
 }
 
 window.onload = function () {
-  //#region logout
-
   //#region HTMLelements
-  var logOutButton = document.getElementById("logout");
   var bird = document.getElementById("bird");
   var birdLeft = bird.getBoundingClientRect().left;
   var obstacle = document.getElementsByClassName("obstacle")[0];
@@ -57,7 +54,7 @@ window.onload = function () {
     footer.getBoundingClientRect().bottom - footer.getBoundingClientRect().top;
   console.log(footerWidth);
   //#endregion
-  logOutButton.addEventListener("click", logout);
+
   document.body.addEventListener("click", clickHandlebird, false);
   document.body.addEventListener("click", obstacleAnimationclickHandle, false);
 
@@ -208,21 +205,6 @@ window.onload = function () {
   //#endregion
 
   //#region Game Over
-  function logout() {
-    localStorage.removeItem("currentUser");
-    window.location.href = "../login/login.html";
-  }
-  function updateUserScore(finalScore) {
-    var users = JSON.parse(localStorage.getItem("users"));
-    var currentUserInStorage = users.find(
-      (u) => currentUser.username === u.username
-    );
-    currentUserInStorage.maxScore = Math.max(
-      finalScore,
-      currentUserInStorage.maxScore
-    );
-    localStorage.setItem("users", JSON.stringify(users));
-  }
   function changeHeaderUIGameOver() {
     div.removeChild(RightHeaderGreeting);
     const RestartButton = document
@@ -237,9 +219,6 @@ window.onload = function () {
     LeaderboardButton.textContent = "Leaderboard";
     LeaderboardButton.id = "leaderboard";
     div.appendChild(LeaderboardButton);
-    LeaderboardButton.addEventListener("click", () => {
-      window.location.href = "../leaderboard/leaderboard.html";
-    });
   }
   function GameOver(win) {
     let message = "";
@@ -252,7 +231,6 @@ window.onload = function () {
       gameIsOver = true;
       bird.style.transform = `translateY(0px)`;
       let finalScore = score;
-      updateUserScore(finalScore);
       gameHasStarted = false;
       document.body.removeEventListener("click", clickHandlebird);
       document.body.removeEventListener("click", obstacleAnimationclickHandle);
@@ -260,11 +238,19 @@ window.onload = function () {
       clearInterval(id);
       clearInterval(id2);
       clearInterval(scoreincrement);
+
+      // Remove all obstacle elements from the body
       document.querySelectorAll(".obstacle-clone").forEach((clone) => {
         clone.remove();
       });
       // Clear the obstacleClones array
       obstacleClones = [];
+
+      // Also remove the original obstacle if it exists
+      const originalObstacle = document.getElementById("obstacle");
+      if (originalObstacle && originalObstacle.parentNode) {
+        originalObstacle.parentNode.removeChild(originalObstacle);
+      }
       console.log(finalScore);
       scoreText.innerHTML = `Score = ${finalScore}`;
       changeHeaderUIGameOver();

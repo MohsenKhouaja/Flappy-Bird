@@ -43,7 +43,14 @@ body {
   padding-left: 12px;
   padding-right: 12px;
 }
-
+#score {
+  width: 150px;
+  height: 50px;
+}
+#logout {
+  min-width: 120px;
+  height: 50px;
+}
 .header-text {
   padding: 8px;
   margin-inline: 3%;

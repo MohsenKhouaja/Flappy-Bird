@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="login.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="form">
+      <p class="bigtext">You wanna play ?</p>
+      <form action="">
+        <label class="formtext" for="username">Username :</label>
+        <input id="username" type="text" required autocomplete="username" />
+        <br />
+        <label class="formtext" for="password">Password :</label>
+        <input
+          id="password"
+          type="password"
+          required
+          autocomplete="current-password"
+        />
+        <br />
+      </form>
+      <div id="error" class="formtext"></div>
+
+      <div>
+        <button id="login" class="button">login</button>
+        <button id="sign-up" class="button">sign up</button>
+      </div>
+    </div>
+    <script src="login.js"></script>
+  </body>
+</html>
